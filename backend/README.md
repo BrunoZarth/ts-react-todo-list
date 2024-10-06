@@ -22,6 +22,8 @@ bcryptjs: biblioteca para hashing de senhas.
 
 jsonwebtoken: biblioteca para geração e manipulação de JWT (json web tokens).
 
+knex: query builder que permite a manipulação do DB através de migrations.
+
 # Dependencias de desenvolvimento:
 
 typescript: superset de javascript que adiciona tipagem estática.

@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todolist
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
@@ -20,16 +20,15 @@ services:
       - ./backend/.env
     environment:
       - NODE_ENV=development
-      - JWT_SECRET=${JWT_SECRET}
+      - JWT_SECRET=todolistsecret
       - DB_HOST=db
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=todolist
     ports:
       - '3000:3000'
     depends_on:
       - db
     volumes:
       - ./backend:/usr/src/app
-      - ./backend/.env:/usr/src/app/.env
-    command: sh -c "npx knex migrate:latest && npm run dev"
+    command: sh -c "npm install ts-node --save-dev && npx knex migrate:latest --env development && npx knex seed:run --env development && npm run test"

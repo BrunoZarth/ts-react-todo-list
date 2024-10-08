@@ -24,6 +24,10 @@ jsonwebtoken: biblioteca para geração e manipulação de JWT (json web tokens)
 
 knex: query builder que permite a manipulação do DB através de migrations.
 
+objection: ORM para node.js que complementa o knex, permitindo interagir com o DB através de JSON.
+
+pg: postgres, banco de dados escolhido para o projeto. 
+
 # Dependencias de desenvolvimento:
 
 typescript: superset de javascript que adiciona tipagem estática.
@@ -36,4 +40,7 @@ jest: framework de testes, essencial para o projeto desenvolvido orientado a tes
 
 supertest: biblioteca para testes de integração, para testar as requisições HTTP à API.
 
-@types/node, @types/express, @types/jest, @types/supertest: Os pacotes @types garantem ao servidor que interprete corretamente, que compreenda, as bibliotecas JS em projetos TS.
+@types/node, @types/express, @types/jest, @types/supertest @types/objection: Os pacotes @types garantem ao servidor que interprete corretamente, que compreenda, as bibliotecas JS em projetos TS.
+
+# Como criar uma nova tabela no DB (knex):
+`npx knex migrate:make nome_da_tabela`

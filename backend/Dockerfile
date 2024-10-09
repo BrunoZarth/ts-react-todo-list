@@ -6,10 +6,9 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npm install -g knex
-
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "test"]
+# Usar a variável de ambiente NODE_ENV para definir o comando de inicialização
+CMD ["sh", "-c", "npm run migrate && if [ \"$NODE_ENV\" = \"test\" ]; then npm run test; else npm run dev; fi"]

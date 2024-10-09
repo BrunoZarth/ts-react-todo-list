@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../models/userModel';
+import jwt from 'jsonwebtoken'; // Importar JWT
+import bcrypt from 'bcryptjs'; // Importar bcrypt para verificar senhas
+import dotenv from 'dotenv';
+
+dotenv.config(); // Carregar variáveis de ambiente
 
 export class UserController {
   constructor(private userModel: UserModel) {}
@@ -63,6 +68,36 @@ export class UserController {
       }
     } catch (error) {
       res.status(500).json({ error: 'Erro ao deletar usuário' });
+    }
+  }
+
+  // Método de login atualizado
+  public async login(req: Request, res: Response): Promise<void> {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({ message: 'Email e senha são obrigatórios.' });
+      return;
+    }
+
+    try {
+      const user = await this.userModel.login(email, password); // Chama o método login do UserModel
+
+      if (!user) {
+        res.status(401).json({ message: 'Email ou senha incorretos.' });
+        return;
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET as string,
+        { expiresIn: '1h' }
+      );
+
+      res.status(200).json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro no servidor.' });
     }
   }
 }

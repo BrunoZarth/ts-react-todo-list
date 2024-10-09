@@ -4,31 +4,49 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: todolist
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "todolist"
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    profiles:
+      - development
+      - test
 
   backend:
     build:
-      context: ./backend 
+      context: ./backend
       dockerfile: Dockerfile
     env_file:
       - ./backend/.env
     environment:
-      - NODE_ENV=development
-      - JWT_SECRET=todolistsecret
-      - DB_HOST=db
-      - DB_USER=user
-      - DB_PASSWORD=password
-      - DB_NAME=todolist
-    ports:
-      - '3000:3000'
-    depends_on:
-      - db
+      - JWT_SECRET="todolistsecret"
     volumes:
       - ./backend:/usr/src/app
-    command: sh -c "npm install ts-node --save-dev && npx knex migrate:latest --env development && npx knex seed:run --env development && npm run test"
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    profiles:
+      - development
+    command: sh -c "npm install && npx knex migrate:latest --env development && npx knex seed:run --env development && npm run dev"
+
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    environment:
+      - JWT_SECRET="todolistsecret"
+    volumes:
+      - ./backend:/usr/src/app
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    command: sh -c "npm install && npx knex migrate:latest --env test && npm run test"
+    profiles:
+      - test

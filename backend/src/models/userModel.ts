@@ -39,7 +39,7 @@ export class UserModel {
     if (!user) {
       return null; 
     }
-    const isMatch = await bcrypt.compare(password, user.password); 
+    const isMatch = await bcrypt.compare(password, user.password.trim()); 
     return isMatch ? user : null; 
   }
 }

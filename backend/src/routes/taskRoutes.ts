@@ -12,7 +12,6 @@ const db = knex(knexConfig.development);
 const taskModel = new TaskModel(db); // Passa a instância do Knex para o TaskModel
 const taskController = new TaskController(taskModel);
 
-// Rotas públicas ou protegidas, de acordo com sua aplicação
 taskRouter.get('/', authMiddleware, taskController.getAllTasks.bind(taskController));
 
 taskRouter.post('/', authMiddleware, taskController.createTask.bind(taskController));

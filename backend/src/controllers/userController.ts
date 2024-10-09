@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../models/userModel';
-import jwt from 'jsonwebtoken'; // Importar JWT
-import bcrypt from 'bcryptjs'; // Importar bcrypt para verificar senhas
+import jwt from 'jsonwebtoken'; 
+import bcrypt from 'bcryptjs'; 
 import dotenv from 'dotenv';
 
-dotenv.config(); // Carregar variáveis de ambiente
+dotenv.config(); 
 
 export class UserController {
   constructor(private userModel: UserModel) {}

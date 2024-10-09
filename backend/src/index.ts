@@ -21,6 +21,9 @@ app.use(bodyParser.json());
 import userRoutes from './routes/userRoutes';
 app.use('/api/users', userRoutes); 
 
+import taskRoutes from './routes/taskRoutes';
+app.use('/api/tasks', taskRoutes);
+
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {

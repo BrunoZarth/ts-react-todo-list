@@ -2,7 +2,7 @@
 
 A API RESTful possui endpoints que permitem cadastrar; logar; deletar; editar; buscar todos os usuários ou por email. bem como, caso o usuário esteja logado, deletar, editar, buscar e adicionar novas tarefas. 
 
-A API foi desenvolvido orientada a testes (TDD) e utiliza Docker para rodar.
+A API foi desenvolvido orientada a testes (TDD), utiliza dois bancos de dados e migrations (knex): postgres para produção e sqlite para testes e roda via Docker compose.
 
 # Como funciona a API:
 
